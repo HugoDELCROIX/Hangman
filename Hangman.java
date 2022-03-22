@@ -1,19 +1,30 @@
 import java.util.Scanner;
 
 public class Hangman {
-    protected String word = "tennis";
+    protected String word;
+    protected char letter;
     protected boolean win = false;
     Scanner s = new Scanner(System.in);
 
-    public Hangman(String word){
-        this.word = word;
+    public Hangman(){
+
     }
+
     public String getWord(){
         return this.word;
     }
 
     public void setWord(String word){
         this.word = word;
+    }
+
+    public void askLetter(){
+        char askedLetter = s.next().charAt(0);
+        this.letter = askedLetter;
+    }
+
+    public char showLetter(){
+        return this.letter;
     }
 
     public String censure(){
@@ -24,23 +35,27 @@ public class Hangman {
         return censoredWord;
     }
 
-    public String verify(char letter){
+    public String verify(){
         String verifiedWord = "";
         for(int i=1;i<this.word.length()+1;i++){
-            if(this.word.charAt(i-1)==letter){
-                verifiedWord = verifiedWord + letter;
-                this.word.indexOf(letter, this.word.indexOf(letter)+1);
+            if(this.word.charAt(i-1)==this.letter){
+                verifiedWord = verifiedWord + this.letter;
+                this.word.indexOf(this.letter, this.word.indexOf(this.letter)+1);
             } else {
                 verifiedWord = verifiedWord + "*";
             }   
         }
         return verifiedWord;
     }
+
     public static void main(String[] args) {
-        Hangman a = new Hangman("tennis");
-        System.out.println(a.getWord());
-        a.setWord("lasagne");
-        System.out.println(a.getWord());
+        Hangman a = new Hangman();
+        
+        a.setWord("tennis");
+        System.out.println("Find this word : "+a.censure());
+        a.askLetter();
+        System.out.println("Find this word : "+a.verify());
+        
         
     }
 }
