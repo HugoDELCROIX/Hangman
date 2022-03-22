@@ -1,24 +1,35 @@
 import java.util.Scanner;
 
 public class Hangman {
-    protected static String word = "tennis";
+    protected String word = "tennis";
     protected boolean win = false;
     Scanner s = new Scanner(System.in);
 
-    public static String censure(){
+    public Hangman(String word){
+        this.word = word;
+    }
+    public String getWord(){
+        return this.word;
+    }
+
+    public void setWord(String word){
+        this.word = word;
+    }
+
+    public String censure(){
         String censoredWord = "";
-        for(int i=1;i <word.length()+1;i++){
+        for(int i=1;i <this.word.length()+1;i++){
             censoredWord = censoredWord + "*";
         }
         return censoredWord;
     }
 
-    public static String verify(char letter){
+    public String verify(char letter){
         String verifiedWord = "";
-        for(int i=1;i<word.length()+1;i++){
-            if(word.charAt(i-1)==letter){
+        for(int i=1;i<this.word.length()+1;i++){
+            if(this.word.charAt(i-1)==letter){
                 verifiedWord = verifiedWord + letter;
-                word.indexOf(letter, word.indexOf(letter)+1);
+                this.word.indexOf(letter, this.word.indexOf(letter)+1);
             } else {
                 verifiedWord = verifiedWord + "*";
             }   
@@ -26,7 +37,10 @@ public class Hangman {
         return verifiedWord;
     }
     public static void main(String[] args) {
-        System.out.println("You have 10 attempts to find : "+censure());
-        System.out.println(verify('n'));
+        Hangman a = new Hangman("tennis");
+        System.out.println(a.getWord());
+        a.setWord("lasagne");
+        System.out.println(a.getWord());
+        
     }
 }
