@@ -3,12 +3,9 @@ public class Hangman {
     protected boolean win = false;
 
     public static String censure(String censoredWord){
-        int count = 0;
         censoredWord = "";
         for(int i=1;i <word.length()+1;i++){
-            count = i;
             censoredWord = censoredWord + "*";
-            System.out.println(count);
         }
         return censoredWord;
 
