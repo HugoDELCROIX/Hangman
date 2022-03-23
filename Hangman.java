@@ -2,13 +2,8 @@ import java.util.Scanner;
 
 public class Hangman {
     protected String word;
-    protected String letter;
-    protected boolean win = false;
+    protected char letter;
     Scanner s = new Scanner(System.in);
-
-    public Hangman() {
-
-    }
 
     public String getWord() {
         return this.word;
@@ -19,11 +14,16 @@ public class Hangman {
     }
 
     public void askLetter() {
-        String askedLetter = s.next();
+        System.out.println("Enter a letter : ");
+        char askedLetter = s.next().charAt(0);
         this.letter = askedLetter;
     }
 
-    public String showLetter() {
+    public void setLetter(char letter) {
+        this.letter = letter;
+    }
+
+    public char showLetter() {
         return this.letter;
     }
 
@@ -35,23 +35,50 @@ public class Hangman {
         return censoredWord;
     }
 
-    public String verify() {
-        String verifiedWord = censure();
-        do {
-            
-        } while (win = false);
+    public char[] verify() {
+        String currentWord = getWord();
+        char verifiedWord[] = new char[currentWord.length()];
+        for (int i = 0; i < currentWord.length(); i++) {
+            if (currentWord.charAt(i) == this.letter && verifiedWord[i] != '*') {
+                verifiedWord[i] = this.letter;
+            } else {
+                verifiedWord[i] = '*';
+            }
+        }
         return verifiedWord;
+    }
+
+    public boolean compare() {
+        boolean same = false;
+        for (int i = 0; i < getWord().length(); i++) {
+            if (getWord() == verify().toString()) {
+                same = true;
+            }
+        }
+        return same;
+
+    }
+
+    public void playGame() {
+        boolean win = false;
+        int attempts = 10;
+        setWord("tennis");
+        System.out.println("Welcome to the Hangman game!" + "\n" + "You have "+attempts+" attempts to find this word : " + censure());
+            do {
+                if (compare() == true) {
+                    win = true;
+                } else {
+                    askLetter();
+                    System.out.println(verify());
+                    attempts--;
+                    System.out.println(attempts + " left");
+                }
+            } while (win == false);
     }
 
     public static void main(String[] args) {
         Hangman a = new Hangman();
-
-        a.setWord("tennis");
-        System.out.println("Find this word : " + a.censure());
-        a.askLetter();
-        System.out.println("Find this word : " + a.verify());
-        System.out.println(a.getWord());
-
+        a.playGame();
 
     }
 }
